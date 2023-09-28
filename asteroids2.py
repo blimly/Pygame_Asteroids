@@ -28,18 +28,24 @@ class Asteroid:
         self.speed = speed
         self.size = size
 
-
-ship = Ship(cx, cy)
-asteroids = []
-for _ in range(20):
-    asteroids += [Asteroid(randint(0, 800), randint(0, 800), randint(1, 4), randint(20, 40))]
-
-bullets = []
-
 def dist(ax, ay, bx, by):
     a = ax - bx
     b = ay - by
     return sqrt( a*a + b*b )
+
+
+ship = Ship(cx, cy)
+asteroids = []
+for _ in range(100):
+    rand_x = randint(0, 800)
+    rand_y = randint(0, 800)
+    while dist(rand_x, rand_y, ship.x, ship.y) < 200: # asteroids should not spawn in a 200px radius
+        rand_x = randint(0, 800)
+        rand_y = randint(0, 800)
+    asteroids += [Asteroid(rand_x, rand_y, randint(1, 4), randint(20, 40))]
+
+bullets = []
+
 
 while run:
     pygame.event.get()
