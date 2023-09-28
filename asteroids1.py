@@ -44,8 +44,8 @@ while run:
             bullets.append(Bullet(ship.x + 10, ship.y))
 
     keys = pygame.key.get_pressed()
-    dx = (keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]) * 5
-    dy = (keys[pygame.K_DOWN] - keys[pygame.K_UP]) * 5
+    dx = (keys[pygame.K_d] - keys[pygame.K_a]) * 5
+    dy = (keys[pygame.K_s] - keys[pygame.K_w]) * 5
     if dx and dy:
         dx /= 1.41
         dy /= 1.41
