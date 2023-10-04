@@ -72,6 +72,8 @@ ship = Ship(cx, cy)
 asteroids = [Asteroid(randint(0, 800), randint(0, 800), randint(1, 4), randint(20, 40)) for _ in range(30)]
 bullets = []
 background = pygame.image.load("background.png")
+font = pygame.font.Font(None, 36)
+score = 0
 
 while run:
     pygame.event.get()
@@ -98,12 +100,16 @@ while run:
             if bullet.position.distance_to(asteroid.position) < asteroid.size:
                 bullets.remove(bullet)
                 asteroid.respawn()
+                score += 1
 
     for bullet in bullets[:]:
         bullet.update()
         bullet.render(window)
         if bullet.position.y < 0:
             bullets.remove(bullet)
+
+    text_surface = font.render(f"Asteroids Shot: {score}", True, (255, 255, 255))
+    window.blit(text_surface, (10, 10))
 
     pygame.display.update()
     clock.tick(30)
