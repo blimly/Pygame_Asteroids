@@ -25,7 +25,7 @@ class Bullet:
 class Ship:
     def __init__(self, start_x, start_y):
         self.position = Vector2(start_x, start_y)
-        self.velocity = Vector2(0, 0)
+        self.velocity = Vector2(0.001, 0)
         self.acceleration = Vector2(0, 0)
         self.max_speed = 10
         self.friction = 0.98  # Adjust the friction factor as needed
@@ -35,8 +35,8 @@ class Ship:
         self.acceleration *= 0.2  # Adjust acceleration strength as needed
 
         self.velocity += self.acceleration
-        self.velocity.clamp_magnitude_ip(self.max_speed)
-
+        self.velocity.clamp_magnitude_ip(0.001, self.max_speed)
+        
         self.position += self.velocity
         self.velocity *= self.friction
 
@@ -71,6 +71,7 @@ def dist(ax, ay, bx, by):
 ship = Ship(cx, cy)
 asteroids = [Asteroid(randint(0, 800), randint(0, 800), randint(1, 4), randint(20, 40)) for _ in range(30)]
 bullets = []
+background = pygame.image.load("background.png")
 
 while run:
     pygame.event.get()
@@ -79,7 +80,7 @@ while run:
     if keys[pygame.K_ESCAPE]:
         run = False
 
-    window.fill("#222255")
+    window.blit(background, (0, 0), (0, 0, 800, 800))
 
     ship.update(keys)
     ship.render(window)
