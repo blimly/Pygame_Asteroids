@@ -25,10 +25,20 @@ class Bullet:
 class Ship:
     def __init__(self, start_x, start_y):
         self.position = Vector2(start_x, start_y)
+        self.velocity = Vector2(0, 0)
+        self.acceleration = Vector2(0, 0)
+        self.max_speed = 10
+        self.friction = 0.98  # Adjust the friction factor as needed
 
     def update(self, keys):
-        move_direction = Vector2(keys[pygame.K_d] - keys[pygame.K_a], keys[pygame.K_s] - keys[pygame.K_w])
-        self.position += move_direction * 10
+        self.acceleration = Vector2(keys[pygame.K_d] - keys[pygame.K_a], keys[pygame.K_s] - keys[pygame.K_w])
+        self.acceleration *= 0.2  # Adjust acceleration strength as needed
+
+        self.velocity += self.acceleration
+        self.velocity.clamp_magnitude_ip(self.max_speed)
+
+        self.position += self.velocity
+        self.velocity *= self.friction
 
     def render(self, window):
         pygame.draw.polygon(window, "#ffffff", [(self.position.x, self.position.y), (self.position.x - 10, self.position.y + 30), (self.position.x + 10, self.position.y + 30)], 2)
