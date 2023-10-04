@@ -69,7 +69,7 @@ def dist(ax, ay, bx, by):
     return sqrt(a * a + b * b)
 
 ship = Ship(cx, cy)
-asteroids = [Asteroid(randint(0, 800), randint(0, 800), randint(1, 4), randint(20, 40)) for _ in range(30)]
+asteroids = [Asteroid(randint(0, 800), randint(0, 300), randint(1, 4), randint(20, 40)) for _ in range(30)]
 bullets = []
 background = pygame.image.load("background.png")
 shoot_sound = pygame.mixer.Sound("laserShoot.wav")
