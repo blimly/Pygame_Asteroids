@@ -77,17 +77,16 @@ font = pygame.font.Font(None, 36)
 score = 0
 
 while run:
-    pygame.event.get()
-
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_ESCAPE]:
-        run = False
-    if keys[pygame.K_SPACE]:
-        bullets.append(Bullet(ship.position.x, ship.position.y))
-        shoot_sound.play()
+    for event in pygame.event.get():
+        if event.type == pygame.KEYUP and event.key == pygame.K_SPACE:
+            bullets.append(Bullet(ship.position.x, ship.position.y))
+            shoot_sound.play()
+        if event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+            run = False
 
     window.blit(background, (0, 0), (0, 0, 800, 800))
 
+    keys = pygame.key.get_pressed()
     ship.update(keys)
     ship.render(window)
 
