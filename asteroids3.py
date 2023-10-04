@@ -72,6 +72,7 @@ ship = Ship(cx, cy)
 asteroids = [Asteroid(randint(0, 800), randint(0, 800), randint(1, 4), randint(20, 40)) for _ in range(30)]
 bullets = []
 background = pygame.image.load("background.png")
+shoot_sound = pygame.mixer.Sound("laserShoot.wav")
 font = pygame.font.Font(None, 36)
 score = 0
 
@@ -81,14 +82,15 @@ while run:
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
         run = False
+    if keys[pygame.K_SPACE]:
+        bullets.append(Bullet(ship.position.x, ship.position.y))
+        shoot_sound.play()
 
     window.blit(background, (0, 0), (0, 0, 800, 800))
 
     ship.update(keys)
     ship.render(window)
 
-    if keys[pygame.K_SPACE]:
-        bullets.append(Bullet(ship.position.x, ship.position.y))
 
     for asteroid in asteroids:
         asteroid.update()
